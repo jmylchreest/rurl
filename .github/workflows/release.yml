@@ -1,0 +1,38 @@
+name: Release with GoReleaser
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write # needed to create releases
+  packages: write # needed if you want to publish Docker images
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Required for changelog generation
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '>=1.21.0'
+          cache: true
+
+      - name: Run tests
+        run: go test ./...
+
+      - name: Run GoReleaser
+        uses: goreleaser/goreleaser-action@v5
+        with:
+          distribution: goreleaser
+          version: latest
+          args: release --clean
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Add any other required environment variables here 
