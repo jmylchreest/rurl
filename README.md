@@ -1,3 +1,8 @@
+[![Test](https://github.com/jmylchreest/rurl/actions/workflows/test.yml/badge.svg)](https://github.com/jmylchreest/rurl/actions/workflows/test.yml)
+[![Release](https://github.com/jmylchreest/rurl/actions/workflows/release.yml/badge.svg)](https://github.com/jmylchreest/rurl/actions/workflows/release.yml)
+[![codecov](https://codecov.io/gh/jmylchreest/rurl/branch/main/graph/badge.svg)](https://codecov.io/gh/jmylchreest/rurl)
+[![Go Report Card](https://goreportcard.com/badge/github.com/jmylchreest/rurl)](https://goreportcard.com/report/github.com/jmylchreest/rurl)
+
 # rurl (Route URL)
 
 `rurl` is a command-line tool that acts as a smart default browser handler. It intercepts URLs and routes them to the appropriate browser profile based on configurable rules. This allows you to automatically open different URLs in different browser profiles, making it easier to manage multiple accounts, separate work/personal browsing, or maintain different browser configurations for different purposes.
@@ -118,24 +123,24 @@ default_profile_id = "chrome-default"
 # Browser definitions
 [[browsers]]
 name = "Google Chrome"
-browser_id = "chrome"
+BrowserID = "chrome"
 executable = "/usr/bin/google-chrome-stable"
-profile_arg = "--profile-directory=%s"
-incognito_arg = "--incognito"
+ProfileArg = "--profile-directory=%s"
+IncognitoArg = "--incognito"
 
 # Profile definitions
 [[profiles]]
 id = "chrome-default"
 name = "Chrome (Default)"
-browser_id = "chrome"
-profile_dir = "Default"
+BrowserID = "chrome"
+ProfileDir = "Default"
 
 # URL routing rules
 [[rules]]
 name = "Work Email"
 pattern = "^https://outlook\\.office\\.com"
 scope = "domain"
-profile_id = "chrome-work"
+ProfileID = "chrome-work"
 incognito = false
 ```
 
@@ -158,10 +163,3 @@ go build -ldflags="-s -w" -o rurl .
 ```bash
 go test ./...
 ```
-
-## Status
-
-[![Test](https://github.com/jmylchreest/rurl/actions/workflows/test.yml/badge.svg)](https://github.com/jmylchreest/rurl/actions/workflows/test.yml)
-[![Release](https://github.com/jmylchreest/rurl/actions/workflows/release.yml/badge.svg)](https://github.com/jmylchreest/rurl/actions/workflows/release.yml)
-[![codecov](https://codecov.io/gh/jmylchreest/rurl/branch/main/graph/badge.svg)](https://codecov.io/gh/jmylchreest/rurl)
-[![Go Report Card](https://goreportcard.com/badge/github.com/jmylchreest/rurl)](https://goreportcard.com/report/github.com/jmylchreest/rurl)

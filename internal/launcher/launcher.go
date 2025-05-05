@@ -11,8 +11,11 @@ import (
 	"github.com/rs/zerolog/log" // Added for structured logging
 )
 
-// Launch opens the given URL in the specified browser profile with appropriate flags.
-func Launch(cfg *config.Config, profileID string, targetURL string, incognito bool) error {
+// LaunchFunc defines the signature for the Launch function to allow mocking in tests
+type LaunchFunc func(cfg *config.Config, profileID string, targetURL string, incognito bool) error
+
+// defaultLaunch is the implementation of Launch that actually launches browsers
+func defaultLaunch(cfg *config.Config, profileID string, targetURL string, incognito bool) error {
 	profile, err := cfg.FindProfileByID(profileID)
 	if err != nil {
 		return fmt.Errorf("cannot launch profile: %w", err)
@@ -95,4 +98,13 @@ func Launch(cfg *config.Config, profileID string, targetURL string, incognito bo
 	}
 
 	return nil
+}
+
+// The current implementation of Launch, which can be replaced in tests
+var actualLaunchFunc LaunchFunc = defaultLaunch
+
+// Launch opens the given URL in the specified browser profile with appropriate flags.
+// This function can be mocked in tests.
+func Launch(cfg *config.Config, profileID string, targetURL string, incognito bool) error {
+	return actualLaunchFunc(cfg, profileID, targetURL, incognito)
 }

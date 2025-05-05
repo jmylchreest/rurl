@@ -8,9 +8,11 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// loadConfigForCompletion tries to load the config, logging errors but not exiting.
-// Completion functions should be robust to missing/invalid config.
-func loadConfigForCompletion() *config.Config {
+// Function type for loading config that can be mocked in tests
+type loadConfigFunc func() *config.Config
+
+// Default implementation of loadConfigForCompletion
+var loadConfigForCompletion loadConfigFunc = func() *config.Config {
 	// Ensure logging is initialized minimally if not already done
 	// logging.InitLogging(false) // Or determine debug status if possible
 

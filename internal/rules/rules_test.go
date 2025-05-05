@@ -137,7 +137,7 @@ func TestApplyRules(t *testing.T) {
 				Rules: []config.Rule{
 					{
 						Name:      "Work Domain",
-						Pattern:   "^https://work\\.example\\.com",
+						Pattern:   "^work\\.example\\.com",
 						Scope:     config.ScopeDomain,
 						ProfileID: "work-profile",
 					},
@@ -147,7 +147,7 @@ func TestApplyRules(t *testing.T) {
 			want: MatchResult{
 				Rule: &config.Rule{
 					Name:      "Work Domain",
-					Pattern:   "^https://work\\.example\\.com",
+					Pattern:   "^work\\.example\\.com",
 					Scope:     config.ScopeDomain,
 					ProfileID: "work-profile",
 				},
